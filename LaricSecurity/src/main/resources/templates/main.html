@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>main</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        .login-block {
+            background-color: #fff;
+            padding: 60px;
+            -webkit-box-shadow: 0 3px 50px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 3px 50px 0 rgba(0, 0, 0, .1);
+            text-align: center;
+            border-radius: 5px
+        }
+
+        .login-block h *, .login-block h6 {
+            font-family: Open Sans, sans-serif;
+            color: #96a2b2;
+            letter-spacing: 1px
+        }
+
+        .login-block h * {
+            font-size: 22px;
+            margin-bottom: 60px;
+            margin-top: 40px
+        }
+
+        .login-block .input-group-addon {
+            color: #29aafe;
+            font-size: 19px;
+            opacity: .5
+        }
+
+        .login-block .btn-block {
+            margin-top: 30px;
+            padding: 15px;
+            background: #29aafe;
+            border-color: #29aafe;
+        }
+
+        .login-block .hr-xs {
+            margin-top: 5px;
+            margin-bottom: 5px
+        }
+    </style>
+    <script type="text/javascript">
+        function invert(field) {
+            for (i = 0; i < field.length; i++) {
+                if (field[i].checked == true) field[i].checked = false;
+                else field[i].checked = true;
+            }
+        }
+
+        $(document).on('change', 'input[type=checkbox]', function () {
+            var $this = $(this), $chks = $(document.getElementsByName(this.name)), $all = $chks.filter(".chk-all");
+
+            if ($this.hasClass('chk-all')) {
+                $chks.prop('checked', $this.prop('checked'));
+            } else switch ($chks.filter(":checked").length) {
+                case +$all.prop('checked'):
+                    $all.prop('checked', false).prop('indeterminate', false);
+                    break;
+                case $chks.length - !!$this.prop('checked'):
+                    $all.prop('checked', true).prop('indeterminate', false);
+                    break;
+                default:
+                    $all.prop('indeterminate', true);
+            }
+        });
+    </script>
+</head>
+
+<body>
+<header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-xxl">
+            <a class="navbar-brand" href="#"><b>Itransition</b></a>
+
+            <form class="d-flex" th:action="@{/logout}" method="post">
+                <h4 style="margin: 3px" th:inline="text">[[${#httpServletRequest.remoteUser}]]</h4>
+                <button style="margin: 3px" type="submit" class="btn btn-primary">Log out</button>
+            </form>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <div align="center">
+                            <form class="d-flex" action="/main">
+                                <button type="submit" class="btn btn-primary">Главная страница</button>
+                            </form>
+                            <br>
+                            <form class="d-flex" action="/login">
+                                <button type="submit" class="btn btn-primary">Логин</button>
+                            </form>
+                        </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<br/>
+
+<div class="login-block">
+    <div class="login-block">
+        <div class="login-block">
+
+            <h4><b>Users</b></h4>
+            <br/>
+
+            <form action="#" th:action="@{/main}" th:object="${helperUser}" method="post">
+                <div style="margin: 15px" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-3" role="group" aria-label="First group">
+                        <button type="submit" name="action" value="block" class="btn btn-primary">Block</button>
+                        <button type="submit" name="action" value="unblock" class="btn btn-primary">Unblock</button>
+                        <button type="submit" name="action" value="delete" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+
+                <table style="width: 800px" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col"><input type="checkbox" value=""
+                                               onclick="invert(document.getElementsByClassName('list'))"></th>
+                        <th scope="col">id</th>
+                        <th scope="col">name</th>
+                        <th scope="col">email</th>
+                        <th scope="col">status</th>
+                        <th scope="col">dataRegistration</th>
+                        <th scope="col">dataLastLogin</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td><input type="checkbox" class="list" th:field="*{checkedItems}" th:value="${user.getId()}"/>
+                        </td>
+                        <td th:text="${user.getId()}"/>
+                        <td th:text="${user.getUsername()}"/>
+                        <td th:text="${user.getEmail()}"/>
+                        <td th:text="${user.isAccountNonLocked()}"/>
+                        <td th:text="${user.getDataRegistration()}"/>
+                        <td th:text="${user.getLastLoginDate()}"/>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

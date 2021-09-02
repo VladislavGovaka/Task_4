@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=1200, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Регистрация</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        .login-block {
+            background-color: #fff;
+            padding: 60px;
+            -webkit-box-shadow: 0 3px 50px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 3px 50px 0 rgba(0, 0, 0, .1);
+            text-align: center;
+            border-radius: 5px
+        }
+
+        .login-block h *, .login-block h6 {
+            font-family: Open Sans, sans-serif;
+            color: #96a2b2;
+            letter-spacing: 1px
+        }
+
+        .login-block h * {
+            font-size: 22px;
+            margin-bottom: 60px;
+            margin-top: 40px
+        }
+
+        .login-block .input-group-addon {
+            color: #29aafe;
+            font-size: 19px;
+            opacity: .5
+        }
+
+        .login-block .btn-block {
+            margin-top: 30px;
+            padding: 15px;
+            background: #29aafe;
+            border-color: #29aafe;
+        }
+
+        .login-block .hr-xs {
+            margin-top: 5px;
+            margin-bottom: 5px
+        }
+    </style>
+
+
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-xxl">
+            <a class="navbar-brand" href="#"><b>Itransition</b></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <div align="center">
+                            <form class="d-flex" action="/main">
+                                <button type="submit" class="btn btn-primary">Главная страница</button>
+                            </form>
+                            <br>
+                            <form class="d-flex" action="/login">
+                                <button type="submit" class="btn btn-primary">Логин</button>
+                            </form>
+                        </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="login-block">
+    <div class="login-block">
+        <div class="login-block" style="max-width: 600px; margin: 0 auto">
+            <form th:action="@{/registration}" method="post" th:object="${user}">
+                <div align="center" class="mb-3">
+                    <label for="username" class="form-label">Ваше имя:</label>
+                    <input class="form-control" style="width: 300px" type="text" th:field="*{username}" id="username"
+                           placeholder="Tom">
+                </div>
+                <div align="center" class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input class="form-control" style="width: 300px" type="text" th:field="*{email}" id="email"
+                           placeholder="tom@mail.ru">
+                </div>
+                <div align="center" class="mb-3">
+                    <label for="password" class="form-label">Пароль:</label>
+                    <input class="form-control" style="width: 300px" type="text" th:field="*{password}" id="password"
+                           placeholder="*****">
+                </div>
+                <button type="submit" class="btn btn-primary">Регистрация</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
